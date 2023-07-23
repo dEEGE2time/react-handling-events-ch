@@ -1,34 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react'
 import css from "./css/NavBarSimple.module.css"
+import NavBarChild from './NavBarChild'
 
-
-class NavBarForm extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            buttonText: 'Log in',
-        }
+export class NavBarForm extends Component {
+  
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       isLoggedIn: true,
     }
+  }
 
-    handleClick = () => {
-        this.setState((prevState) => ({
-            message: prevState.message === 'Hello, guest!' ? 'Welcome back, user!' : 'Hello, guest!',
-            buttonText: prevState.buttonText === 'Log out' ? 'Log in' : 'Log out',
-        }), () => console.log(this.state.message))
-    }
-    
-    render() {
-        return (
-            <div className = {css.NavBar}>
-                <h1>My Gallery</h1>
-                <div>
-                    <span>{this.state.message}</span>
-                    <button onClick={() => this.handleClick()}>{this.state.buttonText}</button>
-                </div>
-            </div>
-        )
-    }
+
+  handleClick = () => {
+    this.setState((prevState) => ({
+        isLoggedIn: prevState.isLoggedIn ? false: true
+    }), () => console.log(this.state.isLoggedIn))
+  }
+
+
+  render() {
+    return (
+      <div className={css.NavBar}>
+        <h1>IronKid</h1>
+        {/* {
+          this.state.isLoggedIn ? 
+            <button onClick={() => this.handleClick()}>Login</button>
+           :
+           <form>
+              <label htmlFor='username'>Username:</label>
+              <input placeholder='username' id='username'/>
+
+              <label htmlFor='password'>Password:</label>
+              <input placeholder='********' id='password'/>
+              <button onClick={() => this.handleClick()}>Submit</button>
+           </form>
+        } */}
+
+        <NavBarChild 
+          isLoggedIn={this.state.isLoggedIn}
+          handleClick={this.handleClick}
+        />
+      </div>
+    )
+  }
 }
 
-export default NavBarForm;
+export default NavBarForm
